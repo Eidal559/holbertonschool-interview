@@ -1,5 +1,4 @@
 #include "lists.h"
-#include <stddef.h>
 
 /**
  * reverse - reverses the second half of the list
