@@ -1,10 +1,5 @@
 #!/usr/bin/python3
-"""
-Log parsing script.
-
-This script reads from stdin, processes HTTP logs, and computes metrics like file size and status code counts.
-It prints the statistics every 10 lines or on keyboard interruption (CTRL + C).
-"""
+"""Script to get stats from a request"""
 
 import sys
 
