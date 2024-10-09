@@ -1,42 +1,45 @@
 #!/usr/bin/python3
-"""Log parsing script.
+"""Script to get stats from a request"""
 
-This script processes log entries from stdin and computes file sizes and HTTP status code counts.
-"""
 import sys
 
-stats = {
-    '200': 0,
-    '301': 0,
-    '400': 0,
-    '401': 0,
-    '403': 0,
-    '404': 0,
-    '405': 0,
-    '500': 0
-}
-sizes = [0]
-
-def print_stats():
-    print('File size: {}'.format(sum(sizes)))
-    for s_code, count in sorted(stats.items()):
-        if count:
-            print('{}: {}'.format(s_code, count))
+codes = {}
+status_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
+count = 0
+size = 0
 
 try:
-    for i, line in enumerate(sys.stdin, start=1):
-        matches = line.rstrip().split()
+    for ln in sys.stdin:
+        if count == 10:
+            print("File size: {}".format(size))
+            for key in sorted(codes):
+                print("{}: {}".format(key, codes[key]))
+            count = 1
+        else:
+            count += 1
+
+        ln = ln.split()
+
         try:
-            status_code = matches[-2]
-            file_size = matches[-1]
-            if status_code in stats.keys():
-                stats[status_code] += 1
-            sizes.append(int(file_size))
-        except Exception:
+            size = size + int(ln[-1])
+        except (IndexError, ValueError):
             pass
-        if i % 10 == 0:
-            print_stats()
-    print_stats()
+
+        try:
+            if ln[-2] in status_codes:
+                if codes.get(ln[-2], -1) == -1:
+                    codes[ln[-2]] = 1
+                else:
+                    codes[ln[-2]] += 1
+        except IndexError:
+            pass
+
+    print("File size: {}".format(size))
+    for key in sorted(codes):
+        print("{}: {}".format(key, codes[key]))
+
 except KeyboardInterrupt:
-    print_stats()
-    sys.exit(0)  # Exit cleanly without raising the exception or showing traceback
+    print("File size: {}".format(size))
+    for key in sorted(codes):
+        print("{}: {}".format(key, codes[key]))
+    raise
