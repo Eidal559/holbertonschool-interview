@@ -1,5 +1,12 @@
 #!/usr/bin/python3
-"""Input stats"""
+"""
+Log parsing script.
+
+This script reads from standard input line by line and computes metrics based on the input format:
+- File size is accumulated.
+- HTTP status codes (200, 301, 400, 401, 403, 404, 405, 500) are counted.
+Metrics are printed every 10 lines or upon keyboard interruption (CTRL + C).
+"""
 import sys
 
 stats = {
@@ -14,13 +21,11 @@ stats = {
 }
 sizes = [0]
 
-
 def print_stats():
     print('File size: {}'.format(sum(sizes)))
     for s_code, count in sorted(stats.items()):
         if count:
             print('{}: {}'.format(s_code, count))
-
 
 try:
     for i, line in enumerate(sys.stdin, start=1):
@@ -38,4 +43,4 @@ try:
     print_stats()
 except KeyboardInterrupt:
     print_stats()
-    raise
+    sys.exit(0)  # Graceful exit without traceback
