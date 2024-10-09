@@ -7,17 +7,16 @@ if __name__ == "__main__":
     codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 
     def check_match(line):
-        '''Checks for regexp match in line.'''
+        '''Checks for matching log line and updates metrics.'''
         try:
-            line = line[:-1]
+            line = line.strip()
             words = line.split(" ")
             size[0] += int(words[-1])
             code = int(words[-2])
             if code in codes:
                 codes[code] += 1
-        except ValueError:
+        except (ValueError, IndexError):
             pass
-
 
     def print_stats():
         '''Prints accumulated statistics.'''
@@ -25,6 +24,7 @@ if __name__ == "__main__":
         for k in sorted(codes.keys()):
             if codes[k]:
                 print("{}: {}".format(k, codes[k]))
+
     i = 1
     try:
         for line in sys.stdin:
@@ -34,5 +34,6 @@ if __name__ == "__main__":
             i += 1
     except KeyboardInterrupt:
         print_stats()
-        raise
+        sys.exit(0)  # Exit gracefully
+
     print_stats()
