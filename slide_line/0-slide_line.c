@@ -12,9 +12,10 @@ void slide_right(int *line, size_t size);
  *
  * Return: 1 upon success, 0 upon failure
  */
+
 int slide_line(int *line, size_t size, int direction)
 {
-    if (direction != SLIDE_LEFT && direction != SLIDE_RIGHT)
+    if (line == NULL || size == 0 || (direction != SLIDE_LEFT && direction != SLIDE_RIGHT))
         return 0;
 
     if (direction == SLIDE_LEFT)
@@ -25,11 +26,13 @@ int slide_line(int *line, size_t size, int direction)
     return 1;
 }
 
+
 /**
  * slide_left - Helper function to slide and merge elements to the left
  * @line: Points to an array of integers containing `size` elements
  * @size: Number of elements in `line`
  */
+
 void slide_left(int *line, size_t size)
 {
     size_t i, pos = 0;
@@ -78,6 +81,7 @@ void slide_left(int *line, size_t size)
  * @line: Points to an array of integers containing `size` elements
  * @size: Number of elements in `line`
  */
+
 void slide_right(int *line, size_t size)
 {
     size_t i, pos = size - 1;
