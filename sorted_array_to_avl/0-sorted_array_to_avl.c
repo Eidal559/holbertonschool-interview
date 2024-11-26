@@ -7,10 +7,11 @@
  * @start: Start index of the current subarray
  * @end: End index of the current subarray
  * @parent: Pointer to the parent node
- * 
+ *
  * Return: Pointer to the root node of the subtree
  */
-avl_t *sorted_array_to_avl_helper(int *array, int start, int end, avl_t *parent)
+avl_t *sorted_array_to_avl_helper(int *array, int start, int end,
+avl_t *parent)
 {
 	int mid;
 	avl_t *node;
@@ -36,7 +37,7 @@ avl_t *sorted_array_to_avl_helper(int *array, int start, int end, avl_t *parent)
  * sorted_array_to_avl - Builds an AVL tree from a sorted array
  * @array: Pointer to the first element of the sorted array
  * @size: Number of elements in the array
- * 
+ *
  * Return: Pointer to the root of the AVL tree
  */
 avl_t *sorted_array_to_avl(int *array, size_t size)
