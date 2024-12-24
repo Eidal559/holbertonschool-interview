@@ -8,9 +8,9 @@
  */
 void swap(int *a, int *b)
 {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+	int temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
 /**
@@ -22,22 +22,22 @@ void swap(int *a, int *b)
  */
 void sift_down(int *array, size_t size, size_t root, size_t end)
 {
-    size_t largest = root;
-    size_t left = 2 * root + 1;
-    size_t right = 2 * root + 2;
+	size_t largest = root;
+	size_t left = 2 * root + 1;
+	size_t right = 2 * root + 2;
 
-    if (left <= end && array[left] > array[largest])
-        largest = left;
+	if (left <= end && array[left] > array[largest])
+		largest = left;
 
-    if (right <= end && array[right] > array[largest])
-        largest = right;
+	if (right <= end && array[right] > array[largest])
+		largest = right;
 
-    if (largest != root)
-    {
-        swap(&array[root], &array[largest]);
-        print_array(array, size); /* Print array after swap */
-        sift_down(array, size, largest, end);
-    }
+	if (largest != root)
+	{
+		swap(&array[root], &array[largest]);
+		print_array(array, size); /* Print array after swap */
+		sift_down(array, size, largest, end);
+	}
 }
 
 /**
@@ -47,18 +47,20 @@ void sift_down(int *array, size_t size, size_t root, size_t end)
  */
 void heap_sort(int *array, size_t size)
 {
-    if (!array || size < 2)
-        return;
+	ssize_t i, end;
 
-    /* Build max heap */
-    for (ssize_t i = (size / 2) - 1; i >= 0; i--)
-        sift_down(array, size, i, size - 1);
+	if (!array || size < 2)
+		return;
 
-    /* Extract elements from the heap */
-    for (ssize_t end = size - 1; end > 0; end--)
-    {
-        swap(&array[0], &array[end]); /* Move current root to end */
-        print_array(array, size);    /* Print array after swap */
-        sift_down(array, size, 0, end - 1); /* Restore heap property */
-    }
+	/* Build max heap */
+	for (i = (size / 2) - 1; i >= 0; i--)
+		sift_down(array, size, i, size - 1);
+
+	/* Extract elements from the heap */
+	for (end = size - 1; end > 0; end--)
+	{
+		swap(&array[0], &array[end]); /* Move current root to end */
+		print_array(array, size);    /* Print array after swap */
+		sift_down(array, size, 0, end - 1); /* Restore heap property */
+	}
 }
