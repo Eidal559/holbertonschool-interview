@@ -1,0 +1,3 @@
+O(n log n)  # Best Case
+O(n log n)  # Average Case
+O(n log n)  # Worst Case
