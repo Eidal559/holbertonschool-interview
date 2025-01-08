@@ -4,6 +4,7 @@ Module to count keywords in Reddit post titles using the Reddit API.
 """
 
 import requests
+import sys
 
 
 def count_words(subreddit, word_list, after=None, word_count=None):
@@ -54,8 +55,6 @@ def count_words(subreddit, word_list, after=None, word_count=None):
 
 
 if __name__ == "__main__":
-    import sys
-
     if len(sys.argv) < 3:
         print("Usage: {} <subreddit> <list of keywords>".format(sys.argv[0]))
         print("Example: {} programming 'python java javascript'".format(sys.argv[0]))
