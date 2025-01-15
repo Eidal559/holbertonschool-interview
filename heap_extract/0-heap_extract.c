@@ -28,7 +28,7 @@ static size_t binary_tree_size(const binary_tree_t *tree)
 static heap_t *get_last_node(heap_t *root)
 {
 	heap_t **queue;
-	size_t front = 0, back = 0, size, i;
+	size_t front = 0, back = 0, size;
 	heap_t *current = NULL;
 
 	if (!root)
