@@ -58,7 +58,8 @@ static heap_t *get_last_node(heap_t *root)
  * heapify_down - Rebalances (sifts down) a max heap from the given node
  * @node: Pointer to the node to begin sifting down
  *
- * Compare the node with its children; if a child is bigger, swap and move down.
+ * Compare the node with its children; if a child is bigger,
+ * swap and move down.
  */
 static void heapify_down(heap_t *node)
 {
