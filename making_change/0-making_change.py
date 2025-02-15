@@ -3,6 +3,7 @@
 Coin Change Problem - Finding the minimum number of coins to make a given total.
 """
 
+
 def makeChange(coins, total):
     """
     Determines the minimum number of coins needed to make change for a given total.
