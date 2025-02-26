@@ -10,11 +10,18 @@
  */
 int get_max(int *array, size_t size)
 {
-    int max = array[0];
-    for (size_t i = 1; i < size; i++)
-        if (array[i] > max)
-            max = array[i];
-    return max;
+	int max;
+	size_t i;
+
+	max = array[0];
+
+	for (i = 1; i < size; i++)
+	{
+		if (array[i] > max)
+			max = array[i];
+	}
+
+	return (max);
 }
 
 /**
@@ -25,32 +32,34 @@ int get_max(int *array, size_t size)
  */
 void counting_sort(int *array, size_t size, int exp)
 {
-    int *output = malloc(sizeof(int) * size);
-    int count[10] = {0};
+	int *output, count[10] = {0};
+	size_t i;
+	int j;
 
-    if (!output)
-        return;
+	output = malloc(sizeof(int) * size);
+	if (!output)
+		return;
 
-    /* Count occurrences of each digit */
-    for (size_t i = 0; i < size; i++)
-        count[(array[i] / exp) % 10]++;
+	/* Count occurrences of each digit */
+	for (i = 0; i < size; i++)
+		count[(array[i] / exp) % 10]++;
 
-    /* Convert count to positions */
-    for (int i = 1; i < 10; i++)
-        count[i] += count[i - 1];
+	/* Convert count to positions */
+	for (j = 1; j < 10; j++)
+		count[j] += count[j - 1];
 
-    /* Build output array */
-    for (int i = size - 1; i >= 0; i--)
-    {
-        output[count[(array[i] / exp) % 10] - 1] = array[i];
-        count[(array[i] / exp) % 10]--;
-    }
+	/* Build output array */
+	for (j = size - 1; j >= 0; j--)
+	{
+		output[count[(array[j] / exp) % 10] - 1] = array[j];
+		count[(array[j] / exp) % 10]--;
+	}
 
-    /* Copy back sorted elements */
-    for (size_t i = 0; i < size; i++)
-        array[i] = output[i];
+	/* Copy back sorted elements */
+	for (i = 0; i < size; i++)
+		array[i] = output[i];
 
-    free(output);
+	free(output);
 }
 
 /**
@@ -60,15 +69,17 @@ void counting_sort(int *array, size_t size, int exp)
  */
 void radix_sort(int *array, size_t size)
 {
-    if (!array || size < 2)
-        return;
+	int max, exp;
 
-    int max = get_max(array, size);
+	if (!array || size < 2)
+		return;
 
-    /* Apply counting sort for each digit */
-    for (int exp = 1; max / exp > 0; exp *= 10)
-    {
-        counting_sort(array, size, exp);
-        print_array(array, size);
-    }
+	max = get_max(array, size);
+
+	/* Apply counting sort for each digit */
+	for (exp = 1; max / exp > 0; exp *= 10)
+	{
+		counting_sort(array, size, exp);
+		print_array(array, size);
+	}
 }
