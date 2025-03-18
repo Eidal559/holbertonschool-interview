@@ -14,15 +14,15 @@ int wildcmp(char *s1, char *s2)
 
 	if (*s2 == '*')
 	{
-		if (*(s2 + 1) == '\0') /* If * is the last character, it matches everything */
+		if (*(s2 + 1) == '\0')
 			return (1);
-		if (wildcmp(s1, s2 + 1)) /* Try matching 0 characters */
+		if (wildcmp(s1, s2 + 1))
 			return (1);
-		if (*s1 != '\0' && wildcmp(s1 + 1, s2)) /* Try matching 1+ characters */
+		if (*s1 != '\0' && wildcmp(s1 + 1, s2))
 			return (1);
 	}
 
-	if (*s1 == *s2) /* If characters match, move both forward */
+	if (*s1 == *s2)
 		return (wildcmp(s1 + 1, s2 + 1));
 
 	return (0);
