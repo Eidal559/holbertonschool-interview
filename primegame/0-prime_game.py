@@ -1,4 +1,12 @@
 #!/usr/bin/python3
+"""
+Prime Game Module
+
+This module contains the implementation of a prime game where players
+take turns choosing prime numbers and their multiples from a set
+of consecutive integers.
+"""
+
 
 def isWinner(x, nums):
     """
@@ -29,51 +37,30 @@ def isWinner(x, nums):
             i += 6
         return True
 
+    # Pre-compute primes up to the maximum possible n for efficiency
+    max_n = max(nums) if nums else 0
+    primes_up_to_max = [is_prime(i) for i in range(max_n + 1)]
+
     # Function to play a single round with n integers
     def play_round(n):
-        # Create a set of available numbers from 1 to n
-        numbers = set(range(1, n + 1))
+        # Count the number of primes in the range [1, n]
+        prime_count = sum(1 for i in range(2, n + 1) if primes_up_to_max[i])
 
-        # Alternate turns until someone loses
-        maria_turn = True
-
-        while numbers:
-            # Find available primes
-            primes = [num for num in numbers if is_prime(num)]
-
-            # If no primes left, current player loses
-            if not primes:
-                return "Ben" if maria_turn else "Maria"
-
-            # Choose optimal move (smallest prime is optimal)
-            chosen_prime = min(primes)
-
-            # Remove the chosen prime and its multiples
-            multiples = {chosen_prime}
-            for num in numbers:
-                if num % chosen_prime == 0:
-                    multiples.add(num)
-
-            # Update available numbers
-            numbers -= multiples
-
-            # Switch turns
-            maria_turn = not maria_turn
-
-        # If we run out of numbers, the last player to move wins
-        return "Ben" if maria_turn else "Maria"
+        # Optimal play analysis: whoever has an odd number
+        # of primes to choose wins
+        # Maria goes first, so if prime_count is odd, Maria wins
+        return "Maria" if prime_count % 2 == 1 else "Ben"
 
     # Play all rounds and count wins
     maria_wins = 0
     ben_wins = 0
 
-    for i in range(x):
-        if i < len(nums):
-            winner = play_round(nums[i])
-            if winner == "Maria":
-                maria_wins += 1
-            else:
-                ben_wins += 1
+    for i in range(min(x, len(nums))):
+        winner = play_round(nums[i])
+        if winner == "Maria":
+            maria_wins += 1
+        else:
+            ben_wins += 1
 
     # Return the player with the most wins, or None if tied
     if maria_wins > ben_wins:
